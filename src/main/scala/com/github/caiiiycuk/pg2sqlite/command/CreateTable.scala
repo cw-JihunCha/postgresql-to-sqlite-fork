@@ -29,7 +29,7 @@ object CreateTable extends Command with Log {
         schema.addColumn(table, column)
       }
 
-      (table, s"CREATE TABLE $table (${columns.map(column => s"[${column.name}]").mkString(", ")});")
+      (table, s"CREATE VIRTUAL TABLE $table (${columns.map(column => s"[${column.name}]").mkString(", ")}) USING fts3();")
     } catch {
       case t: Throwable =>
         throw CommandException(s"CREATE TABLE - Unable to find TABLE NAME or COLUMNS in '$rawSql'",
